@@ -11,11 +11,12 @@ pub fn git_hash(_: TokenStream) -> TokenStream {
     let output = command.output().unwrap();
     let stderr = String::from_utf8(output.stderr).unwrap();
     let stdout = String::from_utf8(output.stdout).unwrap();
+    let stdout_trimmed = stdout.trim_end();
 
     assert!(output.status.code() == Some(0), "{}", stderr);
 
     (quote! {
-        #stdout
+        #stdout_trimmed
     })
     .into()
 }
